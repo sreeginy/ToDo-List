@@ -3,11 +3,9 @@ package com.sreeginy.todolist.Utils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sreeginy.todolist.Model.ToDo;
@@ -34,14 +32,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT , TASK TEXT , STATUS INTEGER )");
 
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
 
     }
-
     public void insertTask(ToDo model) {
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -50,12 +46,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null,values);
     }
 
+
     public void updateTask(int id, String task) {
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TASK, task);
         db.update(TABLE_NAME, values , "ID=?" , new String[]{String.valueOf(id)});
     }
+
 
     public void updateStatus(int id, int status) {
         db = this.getWritableDatabase();
@@ -64,10 +62,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
     }
 
+
     public void deleteTask(int id) {
         db = this.getWritableDatabase();
         db.delete(TABLE_NAME , "ID=?" , new String[]{String.valueOf(id)});
     }
+
 
      public List<ToDo> getAllTasks() {
         db = this.getWritableDatabase();
@@ -95,4 +95,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          }
          return modelList;
      }
+     
 }

@@ -21,7 +21,7 @@ import com.sreeginy.todolist.Utils.DatabaseHelper;
 
 public class AddNewTask extends BottomSheetDialogFragment {
 
-    private static final String TAG = "AddNewTask";
+    public static final String TAG = "AddNewTask";
 
     //widgets
     private EditText mEditText;
@@ -108,6 +108,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         Activity activity = getActivity();
-
+        if (activity instanceof OnDialogCloserListner){
+            ((OnDialogCloserListner)activity).onDialogClose(dialog);
     }
+}
 }

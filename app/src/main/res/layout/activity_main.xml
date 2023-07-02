@@ -10,8 +10,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To Do Tasks"
-        android:textColor="@color/black"
+        android:text="TASKS  LIST"
+        android:drawableRight="@drawable/check_24"
+        android:drawablePadding="15dp"
+        android:fontFamily="@font/lemonada_semibold"
+        android:textColor="@color/midnightblue"
         android:textStyle="bold"
         android:textSize="32sp"
         android:layout_centerHorizontal="true"
@@ -35,5 +38,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/add_24" />
+        android:src="@drawable/add_24"
+        android:background="@color/midnightblue"/>
 </RelativeLayout>

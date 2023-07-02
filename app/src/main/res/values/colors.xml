@@ -7,5 +7,6 @@
     <color name="accent">#192A56</color>
 
     <color name="midnightblue">#191970</color>
+    <color name="darkblue">#00008B</color>
     <color name="gray">#DCDCDC</color>
 </resources>

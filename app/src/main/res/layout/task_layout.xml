@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:buttonTint="@color/dark"
+            android:textSize="20dp"
             android:text="This is Task"
             android:paddingStart="8dp"
             android:id="@+id/checkbox"/>

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -20,8 +22,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "my_todo";
     private static final String COLUMN_ID = "ID";
-    private static final String COLUMN_TASK = "TASK";
+    public static final String COLUMN_TASK = "TASK";
     private static final String COLUMN_STATUS = "STATUS";
+    private Context context;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -44,6 +47,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK, model.getTask());
         values.put(COLUMN_STATUS, 0);
         db.insert(TABLE_NAME, null,values);
+
+
     }
 
 
@@ -69,31 +74,97 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-     public List<ToDo> getAllTasks() {
+    public List<ToDo> getAllTasks() {
         db = this.getWritableDatabase();
-         Cursor cursor = null;
-         List<ToDo> modelList = new ArrayList<>();
+        Cursor cursor = null;
+        List<ToDo> modelList = new ArrayList<>();
 
-         db.beginTransaction();
-         try {
-             cursor = db.query(TABLE_NAME, null, null , null, null, null, null);
-             if (cursor !=null) {
-                 if (cursor.moveToFirst()) {
-                     do {
-                         ToDo task = new ToDo();
-                         task.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                         task.setTask(cursor.getString(cursor.getColumnIndex(COLUMN_TASK)));
-                         task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS)));
-                         modelList.add(task);
+        db.beginTransaction();
+        try {
+            cursor = db.query(TABLE_NAME, null, null , null, null, null, null);
+            if (cursor !=null) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        ToDo task = new ToDo();
+                        task.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
+                        task.setTask(cursor.getString(cursor.getColumnIndex(COLUMN_TASK)));
+                        task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS)));
+                        modelList.add(task);
 
-                     }while (cursor.moveToNext());
-                 }
-             }
-         }finally {
-             db.endTransaction();
-             cursor.close();
-         }
-         return modelList;
-     }
+                    }while (cursor.moveToNext());
+                }
+            }
+        }finally {
+            db.endTransaction();
+            cursor.close();
+        }
+        return modelList;
+    }
+
+
+
+    public Cursor getDataByName(String task) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_TASK + " like '%"+task+"%'";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+//
+//    public Cursor getDataByName(String task) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_TASK + " = ?";
+//        return db.rawQuery(query, new String[]{task});
+//    }
+
+    public Cursor readAllData() {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+
+//    public List<ToDo> getAllTasks() {
+//        db = this.getWritableDatabase();
+//        Cursor cursor = null;
+//        List<ToDo> modelList = new ArrayList<>();
+//
+//        db.beginTransaction();
+//        try {
+//            cursor = db.query(TABLE_NAME, null, null , null, null, null, null);
+//            if (cursor != null && cursor.moveToFirst()) {
+//                int idIndex = cursor.getColumnIndex(COLUMN_ID);
+//                int taskIndex = cursor.getColumnIndex(COLUMN_TASK);
+//                int statusIndex = cursor.getColumnIndex(COLUMN_STATUS);
+//
+//                do {
+//                    ToDo task = new ToDo();
+//                    if (idIndex != -1)
+//                        task.setId(cursor.getInt(idIndex));
+//                    if (taskIndex != -1)
+//                        task.setTask(cursor.getString(taskIndex));
+//                    if (statusIndex != -1)
+//                        task.setStatus(cursor.getInt(statusIndex));
+//                    modelList.add(task);
+//                } while (cursor.moveToNext());
+//            }
+//        } finally {
+//            if (cursor != null) {
+//                cursor.close();
+//            }
+//            db.endTransaction();
+//        }
+//        return modelList;
+//    }
+
 
 }

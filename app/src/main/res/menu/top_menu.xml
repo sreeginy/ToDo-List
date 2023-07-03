@@ -9,10 +9,19 @@
 <!--        app:showAsAction="always"-->
 <!--        android:title="Notification"/>-->
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/search_24"
+        android:title="Search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <item
         android:id="@+id/list"
         android:icon="@drawable/more_vert_24"
         android:title=""
         />
+
+
 
 
 

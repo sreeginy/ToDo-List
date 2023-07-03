@@ -2,6 +2,7 @@ package com.sreeginy.todolist;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +28,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     //widgets
     private EditText mEditText;
     private Button mSaveButton;
+    public ImageView imageView;
 
     private DatabaseHelper myDB;
 
@@ -44,8 +47,10 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mEditText = view.findViewById(R.id.editText);
-        mSaveButton = view.findViewById(R.id.saveBtn);
+        mEditText = view.findViewById(R.id.newTask);
+        mSaveButton = view.findViewById(R.id.save);
+
+
 
         myDB = new DatabaseHelper(getActivity());
 
@@ -103,6 +108,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
             }
         });
     }
+
+
+//    public void cancel(View view) {
+//        // Perform the desired action when the cancel button is clicked
+//        // For example, you can close the current activity or dismiss a dialog
+//    }
 
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {

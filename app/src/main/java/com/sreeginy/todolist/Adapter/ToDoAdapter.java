@@ -18,6 +18,7 @@ import com.sreeginy.todolist.R;
 import com.sreeginy.todolist.Utils.DatabaseHelper;
 
 import java.util.List;
+import java.util.Locale;
 
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> {
@@ -93,6 +94,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
     public int getItemCount() {
         return mList.size();
     }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 

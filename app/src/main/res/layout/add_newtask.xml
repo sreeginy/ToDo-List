@@ -1,29 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cornerRadius="18dp"
+    >
 
-    <EditText
+    <LinearLayout
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:paddingStart="7dp"
-        android:paddingEnd="7dp"
-        android:hint="Enter new task"
-        />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/createText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:text="Create a new Task"
+            android:padding="8dp"
+            android:textColor="@color/darkblue"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:textSize="30dp"
+            android:fontFamily="@font/poppins_semibold"
+           />
+
+<!--        android:drawableRight="@drawable/add_task_24"-->
+<!--        android:drawablePadding="18dp"-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/close"-->
+<!--            android:layout_marginLeft="45dp"-->
+<!--            android:layout_marginTop="18dp"-->
+<!--            android:id="@+id/cancelButton"-->
+<!--            android:clickable="true"-->
+<!--            android:onClick="cancel"-->
+<!--            />-->
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_marginTop="90dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="  Enter new task"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line1"
+        app:layout_constraintVertical_bias="0.119"
+       >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:singleLine="true"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/newTask"-->
+<!--        android:paddingStart="7dp"-->
+<!--        android:hint="Enter new task"-->
+<!--        android:paddingEnd="7dp"-->
+<!--        />-->
 
     <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_below="@+id/editText"
-        android:text="Save"
+        android:id="@+id/save"
+        android:layout_width="376dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout"
         android:layout_alignParentEnd="true"
-        android:background="@color/dark"
-        android:textColor="@color/white"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="19dp"
+        android:text="Save"
+        android:background="@color/darkblue"
+        android:textColor="@color/darkblue"
         android:textSize="20dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
-        />
+        android:layout_marginBottom="10dp"/>
+
 
 </RelativeLayout>

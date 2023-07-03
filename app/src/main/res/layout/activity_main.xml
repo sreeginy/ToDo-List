@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TASKS  LIST"
         android:drawableRight="@drawable/check_24"
-        android:drawablePadding="15dp"
+        android:drawablePadding="17dp"
         android:fontFamily="@font/lemonada_semibold"
         android:textColor="@color/midnightblue"
         android:textStyle="bold"
@@ -20,13 +21,22 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="10dp"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recyclerView"
+        android:layout_height="match_parent"
         android:layout_below="@+id/textView"
-        android:nestedScrollingEnabled="true"/>
+        android:layout_marginTop="33dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="true" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add"

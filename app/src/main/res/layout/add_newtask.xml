@@ -30,16 +30,17 @@
 <!--        android:drawableRight="@drawable/add_task_24"-->
 <!--        android:drawablePadding="18dp"-->
 
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/close"-->
-<!--            android:layout_marginLeft="45dp"-->
-<!--            android:layout_marginTop="18dp"-->
-<!--            android:id="@+id/cancelButton"-->
-<!--            android:clickable="true"-->
-<!--            android:onClick="cancel"-->
-<!--            />-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/close__24"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:id="@+id/cancelButton"
+            android:clickable="true"
+            android:onClick="cancel"
+            />
 
     </LinearLayout>
 
@@ -88,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textInputLayout"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="19dp"
         android:text="Save"
         android:background="@color/darkblue"

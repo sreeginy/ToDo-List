@@ -15,14 +15,17 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
+
+<!--    <item-->
+<!--        android:id="@+id/delete_all"-->
+<!--        android:title="Delete All"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        app:showAsAction="never" />-->
+
     <item
-        android:id="@+id/list"
-        android:icon="@drawable/more_vert_24"
-        android:title=""
-        />
-
-
-
-
+        android:id="@+id/menu_refresh"
+        app:showAsAction="never"
+        android:title="Refresh"
+        android:fontFamily="@font/poppins_semibold"/>
 
 </menu>

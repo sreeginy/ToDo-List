@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="swipe_action_label_margin">16dp</dimen>
+    <dimen name="swipe_action_icon_size_3">24dp</dimen>
+    <dimen name="swipe_action_label_size_4">16dp</dimen>
+    <dimen name="swipe_action_label_size">24dp</dimen>
+
+
+        <dimen name="swipe_action_icon_margin">16dp</dimen>
+        <dimen name="swipe_action_icon_size">24dp</dimen>
+
+
+</resources>

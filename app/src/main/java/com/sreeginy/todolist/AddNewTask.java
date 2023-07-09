@@ -50,7 +50,13 @@ public class AddNewTask extends BottomSheetDialogFragment {
         mEditText = view.findViewById(R.id.newTask);
         mSaveButton = view.findViewById(R.id.save);
 
-
+        imageView = view.findViewById(R.id.cancelButton);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         myDB = new DatabaseHelper(getActivity());
 

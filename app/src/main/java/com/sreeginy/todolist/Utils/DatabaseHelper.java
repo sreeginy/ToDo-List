@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase db;
     private static final String DATABASE_NAME = "todo_list.db";
 
-    private static final String TABLE_NAME = "my_todo";
+    public static final String TABLE_NAME = "my_todo";
     private static final String COLUMN_ID = "ID";
     public static final String COLUMN_TASK = "TASK";
     public static final String COLUMN_STATUS = "STATUS";
@@ -92,4 +92,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor readAllData() {
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
+
+    public void deleteAllTasks() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.execSQL("DELETE FROM " + TABLE_NAME);
+        } finally {
+            if (db != null && db.isOpen()) {
+                db.close();
+            }
+        }
+    }
+
+
+
 }

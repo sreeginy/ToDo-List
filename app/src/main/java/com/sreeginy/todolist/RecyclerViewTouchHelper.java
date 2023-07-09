@@ -1,9 +1,15 @@
 package com.sreeginy.todolist;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -60,11 +66,25 @@ public class RecyclerViewTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     }
 
+//    @Override
+//    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+//        new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+//                .addSwipeLeftBackgroundColor(ContextCompat.getColor(adapter.getContext(), R.color.midnightblue))
+//                .addSwipeLeftActionIcon(R.drawable.edit_24)
+//                .addSwipeLeftActionLabel("Tap to Edit Task")
+//                .addSwipeRightBackgroundColor(Color.RED)
+//                .addSwipeRightActionIcon(R.drawable.delete_24)
+//                .addSwipeRightActionLabel("Swipe to Remove Task")
+//                .create()
+//                .decorate();
+//        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+//    }
+
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
         new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                .addSwipeLeftBackgroundColor(ContextCompat.getColor(adapter.getContext(), R.color.dark))
+                .addSwipeLeftBackgroundColor(ContextCompat.getColor(adapter.getContext(), R.color.midnightblue))
                 .addSwipeLeftActionIcon(R.drawable.edit_24)
                 .addSwipeRightBackgroundColor(Color.RED)
                 .addSwipeRightActionIcon(R.drawable.delete_24)
@@ -73,4 +93,8 @@ public class RecyclerViewTouchHelper extends ItemTouchHelper.SimpleCallback {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
     }
+
+
+
+
 }

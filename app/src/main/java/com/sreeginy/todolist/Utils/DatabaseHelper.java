@@ -23,148 +23,73 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "my_todo";
     private static final String COLUMN_ID = "ID";
     public static final String COLUMN_TASK = "TASK";
-    private static final String COLUMN_STATUS = "STATUS";
+    public static final String COLUMN_STATUS = "STATUS";
     private Context context;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
+        this.context = context;
+        db = getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT , TASK TEXT , STATUS INTEGER )");
-
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
-
     }
+
     public void insertTask(ToDo model) {
-        db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TASK, model.getTask());
         values.put(COLUMN_STATUS, 0);
-        db.insert(TABLE_NAME, null,values);
-
-
+        db.insert(TABLE_NAME, null, values);
     }
-
 
     public void updateTask(int id, String task) {
-        db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TASK, task);
-        db.update(TABLE_NAME, values , "ID=?" , new String[]{String.valueOf(id)});
+        db.update(TABLE_NAME, values, "ID=?", new String[]{String.valueOf(id)});
     }
-
 
     public void updateStatus(int id, int status) {
-        db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_STATUS, status);
-        db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
+        db.update(TABLE_NAME, values, "ID=?", new String[]{String.valueOf(id)});
     }
-
 
     public void deleteTask(int id) {
-        db = this.getWritableDatabase();
-        db.delete(TABLE_NAME , "ID=?" , new String[]{String.valueOf(id)});
+        db.delete(TABLE_NAME, "ID=?", new String[]{String.valueOf(id)});
     }
 
-
     public List<ToDo> getAllTasks() {
-        db = this.getWritableDatabase();
-        Cursor cursor = null;
         List<ToDo> modelList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
-        db.beginTransaction();
-        try {
-            cursor = db.query(TABLE_NAME, null, null , null, null, null, null);
-            if (cursor !=null) {
-                if (cursor.moveToFirst()) {
-                    do {
-                        ToDo task = new ToDo();
-                        task.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                        task.setTask(cursor.getString(cursor.getColumnIndex(COLUMN_TASK)));
-                        task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS)));
-                        modelList.add(task);
-
-                    }while (cursor.moveToNext());
-                }
-            }
-        }finally {
-            db.endTransaction();
-            cursor.close();
+        if (cursor.moveToFirst()) {
+            do {
+                ToDo task = new ToDo();
+                task.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
+                task.setTask(cursor.getString(cursor.getColumnIndex(COLUMN_TASK)));
+                task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS)));
+                modelList.add(task);
+            } while (cursor.moveToNext());
         }
+
+        cursor.close();
         return modelList;
     }
 
-
-
     public Cursor getDataByName(String task) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_TASK + " like '%"+task+"%'";
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_TASK + " LIKE '%" + task + "%'";
+        return db.rawQuery(query, null);
     }
-
-//
-//    public Cursor getDataByName(String task) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_TASK + " = ?";
-//        return db.rawQuery(query, new String[]{task});
-//    }
 
     public Cursor readAllData() {
-        String query = "SELECT * FROM " + TABLE_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
-
-
-//    public List<ToDo> getAllTasks() {
-//        db = this.getWritableDatabase();
-//        Cursor cursor = null;
-//        List<ToDo> modelList = new ArrayList<>();
-//
-//        db.beginTransaction();
-//        try {
-//            cursor = db.query(TABLE_NAME, null, null , null, null, null, null);
-//            if (cursor != null && cursor.moveToFirst()) {
-//                int idIndex = cursor.getColumnIndex(COLUMN_ID);
-//                int taskIndex = cursor.getColumnIndex(COLUMN_TASK);
-//                int statusIndex = cursor.getColumnIndex(COLUMN_STATUS);
-//
-//                do {
-//                    ToDo task = new ToDo();
-//                    if (idIndex != -1)
-//                        task.setId(cursor.getInt(idIndex));
-//                    if (taskIndex != -1)
-//                        task.setTask(cursor.getString(taskIndex));
-//                    if (statusIndex != -1)
-//                        task.setStatus(cursor.getInt(statusIndex));
-//                    modelList.add(task);
-//                } while (cursor.moveToNext());
-//            }
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();
-//            }
-//            db.endTransaction();
-//        }
-//        return modelList;
-//    }
-
-
 }

@@ -2,7 +2,7 @@ package com.sreeginy.todolist;
 
 import android.content.DialogInterface;
 
-public interface OnDialogCloserListner {
+public interface OnDialogCloseListener {
 
     void onDialogClose(DialogInterface dialogInterface);
 }

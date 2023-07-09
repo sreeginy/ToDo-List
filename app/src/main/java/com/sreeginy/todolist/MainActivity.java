@@ -1,7 +1,6 @@
 package com.sreeginy.todolist;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -10,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,19 +21,17 @@ import com.sreeginy.todolist.Model.ToDo;
 import com.sreeginy.todolist.Utils.DatabaseHelper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnDialogCloserListner  {
+public class MainActivity extends AppCompatActivity implements OnDialogCloseListener {
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private DatabaseHelper myDB;
     private List<ToDo> mList;
     private ToDoAdapter adapter;
-
-    SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,29 +40,14 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloserLis
 
         recyclerView = findViewById(R.id.recyclerView);
         fab = findViewById(R.id.add);
+        swipeRefreshLayout = findViewById(R.id.swiperefresh);
         myDB = new DatabaseHelper(MainActivity.this);
         mList = new ArrayList<>();
         adapter = new ToDoAdapter(myDB, MainActivity.this);
 
-        swipeRefreshLayout = findViewById(R.id.swiperefresh);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-        storeDataInArrays();
-
-        mList = myDB.getAllTasks();
-        Collections.reverse(mList);
-        adapter.setTasks(mList);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                storeDataInArrays();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,60 +58,61 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloserLis
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerViewTouchHelper(adapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                storeDataInArrays();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        storeDataInArrays();
     }
-
-
 
     void storeDataInArrays() {
         mList.clear();
-        Cursor cursor = myDB.readAllData();
-
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    ToDo toDoList = new ToDo();
-                    toDoList.setTask(cursor.getString(0));
-                    mList.add(toDoList);
-                } while (cursor.moveToNext());
-            }
-        } finally {
-            cursor.close();
-        }
+        mList = myDB.getAllTasks();
+        Collections.reverse(mList);
+        adapter.setTasks(mList);
         adapter.notifyDataSetChanged();
     }
-
-
-
 
     public void showDataInArrays(String task) {
-        mList.clear();
         Cursor cursor = myDB.getDataByName(task);
-        try {
-            if (cursor.moveToFirst()) {
+        List<ToDo> taskList = new ArrayList<>();
 
-                do {
+        if (cursor != null && cursor.moveToFirst()) {
+            int taskColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK);
+            int statusColumnIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_STATUS);
+
+            do {
+                if (taskColumnIndex != -1 && statusColumnIndex != -1) {
                     ToDo toDoList = new ToDo();
-                    toDoList.setTask(cursor.getString(0));
-                    mList.add(toDoList);
-                    Log.e("search", toDoList.toString());
-                } while (cursor.moveToNext());
-            }
-        } finally {
+                    toDoList.setTask(cursor.getString(taskColumnIndex));
+                    toDoList.setStatus(cursor.getInt(statusColumnIndex));
+                    taskList.add(toDoList);
+                }
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null) {
             cursor.close();
         }
+
+        Collections.reverse(taskList);
+        adapter.setTasks(taskList);
         adapter.notifyDataSetChanged();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
-
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
-
-        swipeRefreshLayout.setRefreshing(false);
-
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -152,10 +133,6 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloserLis
 
     @Override
     public void onDialogClose(DialogInterface dialogInterface) {
-        mList = myDB.getAllTasks();
-        Collections.reverse(mList);
-        adapter.setTasks(mList);
-        adapter.notifyDataSetChanged();
+        storeDataInArrays();
     }
-
 }

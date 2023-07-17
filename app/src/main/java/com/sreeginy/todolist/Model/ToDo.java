@@ -1,6 +1,7 @@
 package com.sreeginy.todolist.Model;
 
 public class ToDo {
+
     private String task;
     private int id, status;
 

@@ -1,5 +1,4 @@
 package com.sreeginy.todolist.Adapter;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,10 +18,7 @@ import com.sreeginy.todolist.Utils.DatabaseHelper;
 
 import java.util.List;
 import java.util.Locale;
-
-
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> {
-
     private List<ToDo> mList;
     private MainActivity activity;
     private DatabaseHelper myDB;
@@ -31,17 +27,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         this.activity = activity;
         this.myDB = myDB;
     }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_layout , parent , false);
         return  new MyViewHolder(v);
     }
-
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         final ToDo item = mList.get(position);
         holder.checkBox.setText(item.getTask());
         holder.checkBox.setChecked(toBoolean(item.getStatus()));

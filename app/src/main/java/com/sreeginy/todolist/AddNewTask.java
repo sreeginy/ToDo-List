@@ -1,5 +1,4 @@
 package com.sreeginy.todolist;
-
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,36 +19,27 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.sreeginy.todolist.Model.ToDo;
 import com.sreeginy.todolist.Utils.DatabaseHelper;
-
 public class AddNewTask extends BottomSheetDialogFragment {
-
     public static final String TAG = "AddNewTask";
-
-    //widgets
     private EditText mEditText;
     private Button mSaveButton;
     public ImageView imageView;
-
     private DatabaseHelper myDB;
 
     public static AddNewTask newInstance() {
         return new AddNewTask();
     }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View v = inflater.inflate(R.layout.add_newtask, container, false);
        return v;
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mEditText = view.findViewById(R.id.newTask);
         mSaveButton = view.findViewById(R.id.save);
-
         imageView = view.findViewById(R.id.cancelButton);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,12 +47,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
-
         myDB = new DatabaseHelper(getActivity());
-
         boolean isUpdate = false;
-
-
         Bundle bundle = getArguments();
         if(bundle != null) {
             isUpdate = true;

@@ -1,5 +1,4 @@
 package com.sreeginy.todolist;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,28 +19,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sreeginy.todolist.Adapter.ToDoAdapter;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
-
 public class RecyclerViewTouchHelper extends ItemTouchHelper.SimpleCallback {
-
     private ToDoAdapter adapter;
-
     public RecyclerViewTouchHelper(ToDoAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
     }
-
     public RecyclerViewTouchHelper(int dragDirs, int swipeDirs) {
         super(dragDirs, swipeDirs);
     }
-
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         return false;
     }
-
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
         final int position = viewHolder.getAdapterPosition();
         if(direction == ItemTouchHelper.RIGHT) {
             AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());

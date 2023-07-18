@@ -92,8 +92,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="19dp"
         android:text="Save"
-        android:background="@color/darkblue"
-        android:textColor="@color/darkblue"
+        android:textColor="@color/white"
         android:textSize="20dp"
         android:layout_marginBottom="10dp"/>
 

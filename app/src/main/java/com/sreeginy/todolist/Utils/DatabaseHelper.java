@@ -21,7 +21,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TASK = "TASK";
     public static final String COLUMN_STATUS = "STATUS";
     private Context context;
-
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
         this.context = context;
@@ -42,23 +41,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_STATUS, 0);
         db.insert(TABLE_NAME, null, values);
     }
-
     public void updateTask(int id, String task) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TASK, task);
         db.update(TABLE_NAME, values, "ID=?", new String[]{String.valueOf(id)});
     }
-
     public void updateStatus(int id, int status) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_STATUS, status);
         db.update(TABLE_NAME, values, "ID=?", new String[]{String.valueOf(id)});
     }
-
     public void deleteTask(int id) {
         db.delete(TABLE_NAME, "ID=?", new String[]{String.valueOf(id)});
     }
-
     public List<ToDo> getAllTasks() {
         List<ToDo> modelList = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
